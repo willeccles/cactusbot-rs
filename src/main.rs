@@ -26,13 +26,20 @@ fn main() {
                             );
                     }
                     Some("!kys") => {
+                        let isme = message.author.id == discord::model::UserId(111943010396229632);
                         let _ = discord.send_message(
                             message.channel_id,
-                            "<a:kms:805813040327032905>",
+                            if !isme {
+                                "You're not the boss of me >:("
+                            } else {
+                                "<a:kms:805813040327032905>"
+                            },
                             "",
                             false,
                             );
-                        break;
+                        if isme {
+                            break;
+                        }
                     }
                     Some(&_) => {}
                     None => {}

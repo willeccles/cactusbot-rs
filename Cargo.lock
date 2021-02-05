@@ -37,6 +37,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0fc10e8cc6b2580fda3f36eb6dc5316657f812a3df879a44a66fc9f0fdbc4855"
 
 [[package]]
+name = "cactusbot-rs"
+version = "0.1.0"
+dependencies = [
+ "discord",
+]
+
+[[package]]
 name = "cc"
 version = "1.0.66"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -625,13 +632,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3acd125665422973a33ac9d3dd2df85edad0f4ae9b00dafb1a05e43a9f5ef8e7"
 dependencies = [
  "winapi 0.3.9",
-]
-
-[[package]]
-name = "rsbot"
-version = "0.1.0"
-dependencies = [
- "discord",
 ]
 
 [[package]]
