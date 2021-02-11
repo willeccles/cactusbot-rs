@@ -31,7 +31,7 @@ async fn roll(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
         args.quoted().trimmed();
         match args.parse::<u128>() {
             Ok(0) | Err(_) => {
-                msg.channel_id.say(&ctx, format!("Invalid argument: {}", args.current().unwrap())).await?;
+                msg.channel_id.say(&ctx, "Invalid argument").await?;
                 return Ok(());
             }
             Ok(val) => { sides = val; }
