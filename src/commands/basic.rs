@@ -3,20 +3,42 @@ use serenity::{
     model::prelude::*,
     framework::standard::{
         CommandResult,
-        macros::command,
+        Args,
+        macros::*,
     },
 };
 
 #[command]
-async fn hello(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.channel_id.say(&ctx.http, "Pong!").await?;
+#[aliases(cf)]
+#[description = "Flip a coin."]
+async fn coinflip(ctx: &Context, msg: &Message) -> CommandResult {
+    msg.channel_id.say(&ctx, if rand::random() {
+        "Heads!"
+    } else {
+        "Tails!"
+    }).await?;
 
     Ok(())
 }
 
 #[command]
-async fn pog(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.reply(&ctx, "<a:kannapogging:753429010184142968>").await?;
+#[max_args(1)]
+#[description = "Roll a die. You can optionally specify the number of sides on the die."]
+async fn roll(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
+    let mut sides: u128 = 6u128;
+
+    if !args.is_empty() {
+        args.quoted().trimmed();
+        match args.parse::<u128>() {
+            Ok(0) | Err(_) => {
+                msg.channel_id.say(&ctx, format!("Invalid argument: {}", args.current().unwrap())).await?;
+                return Ok(());
+            }
+            Ok(val) => { sides = val; }
+        }
+    }
+
+    msg.channel_id.say(&ctx, format!("{}", rand::random::<u128>() % sides + 1)).await?;
 
     Ok(())
 }
