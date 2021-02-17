@@ -24,11 +24,13 @@ use serenity::{
         permissions::Permissions,
     },
     prelude::*,
+    utils::Colour,
 };
 
 use commands::{
     basic::*,
     owner::*,
+    util::*,
 };
 
 pub struct ShardManagerContainer;
@@ -64,12 +66,18 @@ struct General;
 #[commands(kys)]
 struct Owner;
 
+#[group]
+#[summary = "Utility commands"]
+#[commands(info)]
+struct Utility;
+
 #[help]
 #[command_not_found_text = "Command not found: `{}`."]
 #[max_levenshtein_distance(3)]
 #[lacking_permissions = "Hide"]
 #[lacking_role = "Nothing"]
 #[wrong_channel = "Strike"]
+#[embed_success_colour("#fab1a8")]
 async fn my_help(
     ctx: &Context,
     msg: &Message,
@@ -142,7 +150,8 @@ async fn main() {
         .on_dispatch_error(dispatch_error)
         .help(&MY_HELP)
         .group(&GENERAL_GROUP)
-        .group(&OWNER_GROUP);
+        .group(&OWNER_GROUP)
+        .group(&UTILITY_GROUP);
 
     let mut client = Client::builder(&token)
         .event_handler(Handler)

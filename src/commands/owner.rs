@@ -10,6 +10,7 @@ use serenity::{
 
 #[command]
 #[owners_only]
+#[description = "bot go bye-bye"]
 async fn kys(ctx: &Context, msg: &Message) -> CommandResult {
     let data = ctx.data.read().await;
 
